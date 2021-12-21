@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<div class="container text-center">
+    <div *ngFor="let channel of RssData?.rss?.channel;">
+        <h2 class="card-title">{{channel.title}}</h2>
+        <hr>
+        <div *ngFor="let item of channel.item;">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="jumbotron">
+                        <h3 class="card-title">{{item.title}}
+                            <!-- <hr>
+                            <small>{{item.description}}</small> -->
+                        </h3>
+                        <div class="card-text">{{item.description}}</div>
+                        <a href="{{item.link}}" class="btn btn-primary ">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+.card-news-title {
+    display: block;
+    padding-bottom: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    border-bottom: solid 1px #dee2e6;
+}
+
+.jumbotron {
+    padding: 2rem 1rem;
+}
+
+.card-box {
+    width: 66vw;
+    padding: 20px;
+}
+
+.card-text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #6c757d;
+    padding-bottom: 15px;
+}
+
+.card-contain {
+    padding: 10px 0 5px 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.card-subtext {
+    font-size: 14px;
+}
+
+.dot {
+    height: 5px;
+    width: 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transform: translateY(-50%);
+}
+
+.news-text-contain {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
