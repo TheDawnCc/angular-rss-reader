@@ -93,3 +93,7 @@ main {
 .lh-tight {
     line-height: 1.25;
 }
+
+#testToggle[aria-expanded=true] #testSvg{
+    fill: #00bcd4;
+}

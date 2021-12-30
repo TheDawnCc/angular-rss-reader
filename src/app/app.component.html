@@ -151,27 +151,29 @@
             </svg>
             <span class="fs-8">Feeds</span>
           </div>
-          <a class="d-flex flex-shrink-1 align-items-center btn text-white text-decoration-none" href="#toggleInputArea"
-            data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="toggleInputArea">
+
+          <a class="d-flex flex-shrink-1 align-items-center text-white text-decoration-none" href="#toggleInputArea"
+            data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="toggleInputArea"
+            id="testToggle">
             <svg class="bi me-2" width="24" height="24">
-              <use xlink:href="#plus" />
+              <use xlink:href="#plus" id="testSvg" />
             </svg>
           </a>
         </div>
 
-        <div class="d-flex flex-row">
-          <div class="collapse" id="toggleInputArea">
-            <form (submit)="addFeed()">
-              <div class="d-flex flex-row">
-                <input type="text" class="d-flex flex-grow-1 form-control form-control-sm" placeholder="Add" [(ngModel)]="model.Url" name="Url">
-                <a class="d-flex flex-shrink-1 text-white text-decoration-none" role="button" (click)="addFeed()">
-                  <svg class="bi me-2" width="16" height="16" style="margin: 5px;">
-                    <use xlink:href="#confirm" />
-                  </svg>
-                </a>
-              </div>
-            </form>
-          </div>
+        <div class="collapse" id="toggleInputArea">
+          <form (submit)="addFeedUrl()">
+            <div class="d-flex flex-row">
+              <input type="text" class="d-flex flex-grow-1 form-control form-control-sm" placeholder="Add Feed Url"
+                [(ngModel)]="feed.Url" name="Url">
+
+              <a class="justify-content-end" role="button" (click)="addFeedUrl()">
+                <svg class="bi me-2" width="24" height="24" style="margin: 5px;">
+                  <use xlink:href="#confirm" />
+                </svg>
+              </a>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -183,15 +185,14 @@
 
       <br>
 
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li>
-          <a href="#" class="nav-link text-white">
-            <svg class="bi me-2" width="16" height="16">
-              <use xlink:href="#speedometer2" />
-            </svg> Dashboard
-          </a>
-        </li>
-      </ul>
+      <div class="list-group list-group-flush scrollarea">
+        <ul class="nav nav-pills flex-column" *ngFor="let i of feedList">
+          <li>
+            <span style="padding-left: 5px;">{{i.Url}}</span>
+          </li>
+          <hr>
+        </ul>
+      </div>
     </div>
 
     <div class="d-flex flex-column align-items-stretch flex-shrink-1 bg-white">

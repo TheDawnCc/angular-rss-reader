@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { APP_BOOTSTRAP_LISTENER, Component } from '@angular/core';
+import { Feed } from './models/feeds';
+import { FeedService } from './feed.service';
 
 @Component({
   selector: 'app-root',
@@ -7,16 +9,23 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-rss-reader';
-  model = new Feed();
-  addFeed() {
-    console.log(this.model.title);
-    console.log(this.model.Url)
+  feed = new Feed();
+  feedList: Array<Feed> = [];
 
-    $('#toggleInputArea').toggle(false);
+  constructor(
+    private feedService: FeedService
+  ) { }
+
+  ngOnInit() {
+    this.feedList = this.feedService.getFeeds();
   }
-}
 
-export class Feed{
-  title:any;
-  Url:any;
+  addFeedUrl() {
+    this.feedService.addFeed(this.feed);
+    console.log(this.feed);
+    this.feed = new Feed();
+    (<any>$('#toggleInputArea')).collapse('toggle');
+    this.feedList = this.feedService.getFeeds();
+    console.log(this.feedList);
+  }
 }

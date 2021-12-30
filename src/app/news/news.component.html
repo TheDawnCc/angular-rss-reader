@@ -5,14 +5,18 @@
         <div *ngFor="let item of channel.item;">
             <div class="card">
                 <div class="jumbotron">
-                    <h3 class="card-title">{{item.title}}
-                        <!-- <hr>
+                    <div class="card-body">
+                        <h3 class="card-title">{{item.title}}
+                            <!-- <hr>
                             <small>{{item.description}}</small> -->
-                    </h3>
-                    <div class="card-text">{{item.description}}</div>
+                        </h3>
+                        <p class="card-text">{{item.description}}</p>
+                    </div>
 
-                    <div class="float-end">
-                        <a href="{{item.link}}" class="btn btn-primary">Read More</a>
+                    <div class="card-foot">
+                        <div class="float-end">
+                            <a href="{{item.link}}" class="btn btn-primary">Read More</a>
+                        </div>
                     </div>
                 </div>
             </div>

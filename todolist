@@ -1,0 +1,4 @@
+1. feed url required validation
+2. nightly mode
+3. collect favorite (size limit 5MB)
+    (https://stackoverflow.com/questions/51536262/angular-6-saving-data-to-local-storage) 
