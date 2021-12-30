@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NewsRss } from './news-rss';
 import { HttpClient } from '@angular/common/http';
 import * as xml2js from 'xml2js';
+import { appendFile } from 'fs';
 
 @Component({
   selector: 'app-news',
@@ -30,9 +31,14 @@ export class NewsComponent implements OnInit {
     console.log('Symbol: ' + Symbol);
 
     // const _url = "http://blog.sina.com.cn/rss/cng.xml";
+    // const _url = "https://seekingalpha.com/api/sa/combined/";
+    // const _url = "https://seekingalpha.com/api/sa/combined/AAPL.xml";
+    // const _url = "https://podcastfeeds.nbcnews.com/HL4TzgYC"
     const _url = "https://gadgets.ndtv.com/rss/feeds";
+    // const _url = "https://blogs.windows.com/feed/";
     const headers = new Headers;
     headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     const requestOptions: Object = {
       headers: headers,
       observe: 'body',
@@ -53,7 +59,7 @@ export class NewsComponent implements OnInit {
     this.http.get<any>(_url, requestOptions).subscribe((data) => {
       console.log(data);
       let parseString = xml2js.parseString;
-      parseString(data, (err,result: NewsRss) => {
+      parseString(data, (err, result: NewsRss) => {
         console.log(result);
         console.log(err);
         this.RssData = result;

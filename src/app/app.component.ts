@@ -7,8 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-rss-reader';
+  model = new Feed();
+  addFeed() {
+    console.log(this.model.title);
+    console.log(this.model.Url)
 
-  add(){
-    console.log('add');
+    $('#toggleInputArea').toggle(false);
   }
+}
+
+export class Feed{
+  title:any;
+  Url:any;
 }
