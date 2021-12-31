@@ -94,6 +94,10 @@ main {
     line-height: 1.25;
 }
 
-#testToggle[aria-expanded=true] #testSvg{
-    fill: #00bcd4;
+#toggleInput[aria-expanded=true] svg{
+    fill: tomato;
+}
+
+#rmBtn:hover svg {
+    fill: red;
 }

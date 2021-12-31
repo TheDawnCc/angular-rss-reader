@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Feed, feeds } from './models/feeds';
 import { ActivatedRoute } from '@angular/router';
-import { NewsRss } from './models/news-rss';
+import { NewsRss, NewsData } from './models/news-rss';
 import { HttpClient } from '@angular/common/http';
 import * as xml2js from 'xml2js';
 
@@ -10,14 +10,16 @@ import * as xml2js from 'xml2js';
 })
 export class FeedService {
   RssData: NewsRss | undefined;
+  NewsDatabase : NewsData = new NewsData();
 
   constructor(
     private http: HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) { }
 
   addFeed(item: Feed) {
     feeds.push(item);
+    this.getFeedData();
   }
 
   removeFeed(item: Feed) {
@@ -31,13 +33,11 @@ export class FeedService {
     return feeds;
   }
 
-  getFeedData(url: string) {
+  getFeedData() {
     // const _url = "http://blog.sina.com.cn/rss/cng.xml";
-    // const _url = "https://seekingalpha.com/api/sa/combined/";
     // const _url = "https://seekingalpha.com/api/sa/combined/AAPL.xml";
-    // const _url = "https://podcastfeeds.nbcnews.com/HL4TzgYC"
     // const _url = "https://blogs.windows.com/feed/";
-
+    
     // const _url = "https://gadgets.ndtv.com/rss/feeds";
 
     const headers = new Headers;
@@ -49,15 +49,20 @@ export class FeedService {
       responseType: 'text',
     };
 
-    this.http.get<any>(url, requestOptions).subscribe((data) => {
-      console.log(data);
-      let parseString = xml2js.parseString;
+    for (let feed of feeds) {
+      this.http.get<any>(feed.Url, requestOptions).subscribe((data) => {
+        console.log(data);
+        let parseString = xml2js.parseString;
 
-      parseString(data, (err, result: NewsRss) => {
-        console.log(result);
-        console.log(err);
-        this.RssData = result;
+        parseString(data, (err, result: NewsRss) => {
+          console.log(result);
+          console.log(err);
+          this.RssData = result;
+          this.NewsDatabase.News.push(this.RssData);
+        });
       });
-    });
+    }
+
+    return this.NewsDatabase;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsRss } from '../models/news-rss';
+import { NewsData } from '../models/news-rss';
+import { FeedService } from '../feed.service';
 
 @Component({
   selector: 'app-news',
@@ -7,14 +8,17 @@ import { NewsRss } from '../models/news-rss';
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {
-  RssData: NewsRss | undefined;
+  NewsDatabase: NewsData = new NewsData();
 
-  constructor() { }
+  constructor(
+    private feedService: FeedService,
+  ) { }
 
   ngOnInit(): void {
     // this.route.queryParamMap.subscribe((params: any) => {
     //     var symbol = params.params.q??'AAPL';
     //     this.GetRssFeedData(symbol);
     // });
+    this.NewsDatabase = this.feedService.getFeedData();
   }
 }

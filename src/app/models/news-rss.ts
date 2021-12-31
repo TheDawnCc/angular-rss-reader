@@ -32,3 +32,7 @@ export interface IRssItem {
     pubDate: Date;
     title: Array<string>;
 }
+
+export class NewsData {
+    News : Array<NewsRss>=[];
+}

@@ -25,7 +25,12 @@ export class AppComponent {
     console.log(this.feed);
     this.feed = new Feed();
     (<any>$('#toggleInputArea')).collapse('toggle');
-    this.feedList = this.feedService.getFeeds();
+    // this.feedList = this.feedService.getFeeds();
     console.log(this.feedList);
+    
+  }
+
+  removeFeedUrl(url:string){
+
   }
 }
