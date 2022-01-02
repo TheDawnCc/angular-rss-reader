@@ -17,13 +17,17 @@ export class FeedService {
     private route: ActivatedRoute,
   ) { }
 
-  addFeed(item: Feed) {
+  addFeed(item: Feed):boolean {
+    if(feeds.find(t=>t.Url==item.Url)){
+      return false;
+    }
     feeds.push(item);
     this.getFeedData();
+    return true;
   }
 
   removeFeed(item: Feed) {
-    const index = feeds.indexOf(item);
+    const index = feeds.indexOf(item,0);
     if (index > -1) {
       feeds.splice(index, 1);
     }
@@ -34,11 +38,13 @@ export class FeedService {
   }
 
   getFeedData() {
-    // const _url = "http://blog.sina.com.cn/rss/cng.xml";
-    // const _url = "https://seekingalpha.com/api/sa/combined/AAPL.xml";
-    // const _url = "https://blogs.windows.com/feed/";
-    
+    // const _url = "https://rss.art19.com/apology-line";
+    // const _url = "https://feeds.simplecast.com/54nAGcIl";
+    // const _url = "https://feeds.simplecast.com/qm_9xx0g";
+    // const _url = "https://feeds.megaphone.fm/WWO3519750118";
     // const _url = "https://gadgets.ndtv.com/rss/feeds";
+
+    this.NewsDatabase = new NewsData();
 
     const headers = new Headers;
     headers.append('Access-Control-Allow-Origin', '*');
@@ -48,7 +54,7 @@ export class FeedService {
       observe: 'body',
       responseType: 'text',
     };
-
+    
     for (let feed of feeds) {
       this.http.get<any>(feed.Url, requestOptions).subscribe((data) => {
         console.log(data);
@@ -56,7 +62,6 @@ export class FeedService {
 
         parseString(data, (err, result: NewsRss) => {
           console.log(result);
-          console.log(err);
           this.RssData = result;
           this.NewsDatabase.News.push(this.RssData);
         });

@@ -21,4 +21,8 @@ export class NewsComponent implements OnInit {
     // });
     this.NewsDatabase = this.feedService.getFeedData();
   }
+
+  refresh():void{
+    this.NewsDatabase = this.feedService.getFeedData();
+  }
 }
