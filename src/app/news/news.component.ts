@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsData } from '../models/news-rss';
+import { NewsData, NewsRss } from '../models/news-rss';
 import { FeedService } from '../feed.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { FeedService } from '../feed.service';
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {
-  NewsDatabase: NewsData = new NewsData();
+  newsRss : NewsRss[] = [];
 
   constructor(
     private feedService: FeedService,
@@ -19,10 +19,11 @@ export class NewsComponent implements OnInit {
     //     var symbol = params.params.q??'AAPL';
     //     this.GetRssFeedData(symbol);
     // });
-    this.NewsDatabase = this.feedService.getFeedData();
+    this.newsRss = this.feedService.getFeedData();
   }
 
   refresh():void{
-    this.NewsDatabase = this.feedService.getFeedData();
+    this.newsRss = this.feedService.getFeedData();
+    console.log('refresh : '+this.newsRss);
   }
 }

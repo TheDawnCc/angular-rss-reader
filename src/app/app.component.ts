@@ -44,4 +44,14 @@ export class AppComponent {
     this.newsPage.refresh();
     (<any>$('#rmModal')).modal('hide')
   }
+
+  filterFeedUrl(url: Feed) {
+    this.feedService.filterFeed(url);
+    this.newsPage.refresh();
+  }
+
+  clearFilter() {
+    this.feedService.clearFilter();
+    this.newsPage.refresh();
+  }
 }

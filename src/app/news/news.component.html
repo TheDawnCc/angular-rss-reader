@@ -1,6 +1,6 @@
 <div class="container text-center">
-    <div *ngFor="let news of NewsDatabase.News">
-        <div *ngFor="let channel of news?.rss?.channel;">
+    <div *ngFor="let item of newsRss">
+        <div *ngFor="let channel of item?.rss?.channel;">
             <h2 class="card-title">{{channel.title}}</h2>
             <hr>
             <div *ngFor="let item of channel.item;">
@@ -11,7 +11,8 @@
                                 <!-- <hr>
                             <small>{{item.description}}</small> -->
                             </h3>
-                            <p class="card-text">{{item.description}}</p>
+                            <!-- <p class="card-text">{{item.description}}</p> -->
+                            <div class="content" [innerHtml]="item.description"></div>
                         </div>
 
                         <div class="card-foot">

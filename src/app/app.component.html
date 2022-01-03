@@ -68,7 +68,7 @@
   </svg>
 
   <main>
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+    <div class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32">
           <use xlink:href="#bootstrap" />
@@ -111,7 +111,7 @@
         </div>
       </div>
 
-      <a class="btn btn-primary" href="/">
+      <a class="btn btn-primary" (click)="clearFilter()">
         <svg class="bi me-2" width="16" height="16">
           <use xlink:href="#home" />
         </svg> Home
@@ -119,15 +119,14 @@
 
       <br>
 
-      <div class="list-group list-group-flush scrollarea">
+      <div class="d-flex list-group list-group-flush scrollarea">
         <ul class="nav nav-pills flex-column" *ngFor="let i of feedList">
           <li>
             <div class="d-flex flex-column">
               <div class="d-flex flex-row">
-                <div href="#"
-                  class="d-flex flex-grow-1 align-items-center mb-3 mb-md-0 text-white text-decoration-none">
-                  <span style="text-overflow: ellipsis; width: 210px;overflow: hidden;" data-bs-toggle="tooltip"
-                    title="{{i.Url}}">{{i.Url}}</span>
+                <div class="d-flex flex-grow-1 align-items-center mb-3 mb-md-0 text-white text-decoration-none">
+                  <a class="test-white" style="text-overflow: ellipsis; width: 210px;overflow: hidden;" data-bs-toggle="tooltip" (click)="filterFeedUrl(i)"
+                    title="{{i.Url}}">{{i.Url}}</a>
                 </div>
 
                 <a id="rmBtn" class="d-flex flex-shrink-1 align-items-center text-white text-decoration-none"
@@ -158,10 +157,8 @@
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
-
           </li>
           <hr>
         </ul>

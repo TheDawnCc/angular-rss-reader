@@ -1,3 +1,5 @@
+import { Feed } from "./feeds";
+
 export interface NewsRss {
     rss: IRssObject;
 }
@@ -34,5 +36,5 @@ export interface IRssItem {
 }
 
 export class NewsData {
-    News : Array<NewsRss>=[];
+    feedNewsMap : Map<Feed,NewsRss>= new Map<Feed,NewsRss>();
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Feed, feeds } from './models/feeds';
+import { Feed } from './models/feeds';
 import { ActivatedRoute } from '@angular/router';
 import { NewsRss, NewsData } from './models/news-rss';
 import { HttpClient } from '@angular/common/http';
@@ -10,31 +10,41 @@ import * as xml2js from 'xml2js';
 })
 export class FeedService {
   RssData: NewsRss | undefined;
-  NewsDatabase : NewsData = new NewsData();
+  NewsDatabase: NewsData = new NewsData();
+  private feeds = Array<Feed>();
+  private filterUrl: Feed | undefined;
 
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
   ) { }
 
-  addFeed(item: Feed):boolean {
-    if(feeds.find(t=>t.Url==item.Url)){
+  addFeed(item: Feed): boolean {
+    if (this.feeds.find(t => t.Url == item.Url)) {
       return false;
     }
-    feeds.push(item);
+    this.feeds.push(item);
     this.getFeedData();
     return true;
   }
 
   removeFeed(item: Feed) {
-    const index = feeds.indexOf(item,0);
+    const index = this.feeds.indexOf(item, 0);
     if (index > -1) {
-      feeds.splice(index, 1);
+      this.feeds.splice(index, 1);
     }
   }
 
+  filterFeed(item: Feed) {
+    this.filterUrl = item;
+  }
+
+  clearFilter() {
+    this.filterUrl = undefined;
+  }
+
   getFeeds(): Feed[] {
-    return feeds;
+    return this.feeds;
   }
 
   getFeedData() {
@@ -44,7 +54,7 @@ export class FeedService {
     // const _url = "https://feeds.megaphone.fm/WWO3519750118";
     // const _url = "https://gadgets.ndtv.com/rss/feeds";
 
-    this.NewsDatabase = new NewsData();
+    var newRss: NewsRss[] = [];
 
     const headers = new Headers;
     headers.append('Access-Control-Allow-Origin', '*');
@@ -54,20 +64,42 @@ export class FeedService {
       observe: 'body',
       responseType: 'text',
     };
-    
-    for (let feed of feeds) {
-      this.http.get<any>(feed.Url, requestOptions).subscribe((data) => {
-        console.log(data);
-        let parseString = xml2js.parseString;
 
-        parseString(data, (err, result: NewsRss) => {
-          console.log(result);
-          this.RssData = result;
-          this.NewsDatabase.News.push(this.RssData);
+    for (let feed of this.feeds) {
+      if (!this.NewsDatabase.feedNewsMap.has(feed)) {
+        this.http.get<any>(feed.Url, requestOptions).subscribe((data) => {
+          console.log(data);
+          let parseString = xml2js.parseString;
+
+          parseString(data, (err, result: NewsRss) => {
+            console.log(result);
+            this.RssData = result;
+            this.NewsDatabase.feedNewsMap.set(feed, this.RssData);
+
+            if (this.filterUrl !== undefined) {
+              newRss.push(this.NewsDatabase.feedNewsMap.get(this.filterUrl)!);
+              return newRss;
+            }
+
+            for (let item of this.NewsDatabase.feedNewsMap.values()) {
+              newRss.push(item);
+            }
+            return newRss;
+          });
         });
-      });
+      }
     }
 
-    return this.NewsDatabase;
+    if (this.filterUrl !== undefined) {
+      newRss.push(this.NewsDatabase.feedNewsMap.get(this.filterUrl)!);
+      return newRss;
+    }
+
+    for (let item of this.NewsDatabase.feedNewsMap.values()) {
+      newRss.push(item);
+      console.log('feedNewsMap item: ', item);
+    }
+
+    return newRss;
   }
 }
