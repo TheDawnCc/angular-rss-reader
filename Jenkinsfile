@@ -1,8 +1,8 @@
 pipeline {
   agent {
     docker {
-      args '-p 3000:3000'
       image 'node:16'
+      args '-p 3000:3000'
     }
 
   }
@@ -18,7 +18,8 @@ pipeline {
         CI = 'true'
       }
       steps {
-        sh './jenkins/scripts/test.sh'
+        sh '''chmod 744 ./jenkins/scripts/test.sh
+./jenkins/scripts/test.sh'''
       }
     }
 
