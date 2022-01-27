@@ -1,8 +1,8 @@
 pipeline {
   agent {
     docker {
-      image 'node:14'
       args '-p 3000:3000'
+      image 'node:16'
     }
 
   }
@@ -14,13 +14,13 @@ pipeline {
     }
 
     stage('Test') {
+      environment {
+        CI = 'true'
+      }
       steps {
         sh './jenkins/scripts/test.sh'
       }
     }
 
-  }
-  environment {
-    CI = 'true'
   }
 }
