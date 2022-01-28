@@ -7,6 +7,8 @@ echo 'correctly bundles React in production mode and optimizes the build for'
 echo 'the best performance.'
 set -x
 npm run ng build
+
+scp -r /var/jenkins_home/workspace/angular-rss-reader_main/dist/ root@100.42.64.222:/var/www/
 set +x
 
 echo 'The following "npm" command runs your Node.js/React application in'
