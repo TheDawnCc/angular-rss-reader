@@ -9,7 +9,7 @@ pipeline {
     type = 'micro'
   }
   
-  stags{
+  stages{
     stage('var example') {
       steps {
         powershell '''
