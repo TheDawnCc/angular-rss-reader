@@ -9,28 +9,30 @@ pipeline {
     type = 'micro'
   }
   
-  stage('var example') {
-    steps {
-      powershell '''
-      
-      echo ${env:WORKSPACE}
-      echo ${env:type}
-      '''
+  stags{
+    stage('var example') {
+      steps {
+        powershell '''
+
+        echo ${env:WORKSPACE}
+        echo ${env:type}
+        '''
+      }
     }
-  }
-  
-  stage('install&test') {
-    steps {
-      powershell '''
-      npm install
-      npm test
-      '''
+
+    stage('install&test') {
+      steps {
+        powershell '''
+        npm install
+        npm test
+        '''
+      }
     }
-  }
-  
-  stage('build') {
-    steps{
-      powershell 'npm build'
+
+    stage('build') {
+      steps{
+        powershell 'npm build'
+      }
     }
   }
   
