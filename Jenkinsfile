@@ -1,27 +1,44 @@
 pipeline {
   agent {
-    docker {
-      image 'node:16'
-      args '-p 3000:3000'
-    }
-
+    label 'test'
   }
-  stages {
-    stage('Build') {
-      steps {
-        sh 'npm install'
-      }
-    }
-
-    stage('Deliver') {
-      steps {
-        sh '''chmod 744 ./jenkins/scripts/deliver.sh
-./jenkins/scripts/deliver.sh'''
-        input 'Finished using the web site? (Click "Proceed" to continue)'
-        sh '''chmod 744 ./jenkins/scripts/kill.sh
-./jenkins/scripts/kill.sh'''
-      }
-    }
-
+  
+  environment {
+    var1 = 'test var'
+    
+    type = 'micro'
   }
+  
+  stage('var example') {
+    steps {
+      powershell '''
+      
+      echo ${env:WORKSPACE}
+      echo ${env:type}
+      '''
+    }
+  }
+  
+  stage('install&test') {
+    steps {
+      powershell '''
+      npm install
+      npm test
+      '''
+    }
+  }
+  
+  stage('build') {
+    steps{
+      powershell 'npm build'
+    }
+  }
+  
+  post{
+    always{
+      archiveArtifacts artifacts: 'build/',fingerprint:true
+      junit 'test-results.xml'
+    }
+  }
+ 
 }
